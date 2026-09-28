@@ -1,0 +1,60 @@
+{
+  "name": "flare-api-spec",
+  "version": "0.1.0",
+  "description": "AI Agent时代的 API SPEC 工具 - 从各种接口定义文档解析，统一格式，供 Agent 和人类使用",
+  "type": "module",
+  "bin": {
+    "flare-api": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc && npm run build:desktop && npm run build:extension",
+    "build:desktop": "cd src/desktop && npm run build",
+    "build:extension": "node scripts/build-extension.mjs",
+    "watch": "tsc --watch",
+    "watch:extension": "tsc -p src/extension/tsconfig.json --watch",
+    "dev": "tsx src/cli/index.ts",
+    "dev:desktop": "cd src/desktop && npm run dev",
+    "start": "npx concurrently -n VITE,TAURI -c cyan,yellow \"npm run dev:desktop\" \"npm run tauri:dev\"",
+    "tauri": "cd src-tauri && cargo run",
+    "tauri:dev": "cd src-tauri && cargo run",
+    "tauri:build": "cd src-tauri && cargo build --release",
+    "tauri:build:win": "cd src-tauri && cargo build --release --target x86_64-pc-windows-msvc",
+    "tauri:build:linux": "cd src-tauri && cargo build --release --target x86_64-unknown-linux-gnu",
+    "tauri:bundle": "cd src-tauri && cargo tauri build",
+    "tauri:bundle:win": "cd src-tauri && cargo tauri build --target x86_64-pc-windows-msvc",
+    "tauri:bundle:linux": "cd src-tauri && cargo tauri build --target x86_64-unknown-linux-gnu",
+    "build:desktop:win": "npm run build:desktop && npm run tauri:bundle:win",
+    "build:desktop:linux": "npm run build:desktop && npm run tauri:bundle:linux",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts",
+    "preinstall": "cd src/desktop && npm install"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "@oclif/core": "^4",
+    "@tauri-apps/api": "^2.11.0",
+    "chalk": "^5.3.0",
+    "concurrently": "^8.2.2",
+    "jszip": "^3.10.1",
+    "undici": "^6.13.0",
+    "yaml": "^2.4.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "@types/chrome": "^0.1.43",
+    "@types/node": "^20.12.0",
+    "@vitest/coverage-v8": "^1.6.1",
+    "copyfiles": "^2.4.1",
+    "esbuild": "^0.28.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "vite": "^5.0.10",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^1.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

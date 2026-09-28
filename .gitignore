@@ -1,0 +1,8 @@
+node_modules
+dist
+.flare
+target
+.claude
+coverage
+.agents
+skills-lock.json
